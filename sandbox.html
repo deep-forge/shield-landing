@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepForge Shield | Technical Sandbox</title>
+    <meta name="description"
+        content="Protect your Intellectual Property from AI training. DeepForge Shield is a client-side proxy that masks sensitive data locally before it reaches the cloud.">
+    <meta name="keywords"
+        content="AI Privacy, Data Masking, LLM Security, Corporate AI Safety, Privacy Proxy, DeepForge">
+    <meta name="author" content="DeepForge Labs">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://твой-домен.com/">
+    <meta property="og:title" content="DeepForge Shield | Stop AI from training on your secrets">
+    <meta property="og:description"
+        content="Local-first data neutralization for LLMs. Keep your business secrets safe while using GPT-4 and other models.">
+    <meta property="og:image" content="https://твой-домен.com/preview.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="DeepForge Shield | Enterprise AI Security">
+    <meta property="twitter:description"
+        content="The first client-side proxy that gives you the power of AI without the privacy risks.">
+    <meta property="twitter:image" content="https://твой-домен.com/preview.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #111111;
+            --muted: #666666;
+            --accent: #000000;
+            --border: #ececec;
+            --safe: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fcfcfc;
+            color: var(--text);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .local-badge {
+            font-size: 10px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+
+        .sandbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .column-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .editor-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: none;
+            color: #444;
+        }
+
+        .variable-list {
+            margin-top: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .var-item {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 12px;
+            margin-bottom: 8px;
+            padding: 6px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .var-original {
+            color: #d93025;
+            font-weight: 600;
+        }
+
+        .var-arrow {
+            color: #999;
+        }
+
+        .var-dummy {
+            color: #1a73e8;
+            font-weight: 600;
+        }
+
+        .result-view {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--muted);
+            white-space: pre-wrap;
+        }
+
+        .highlight-safe {
+            background: #e8f0fe;
+            color: #1967d2;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .controls {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: #000;
+            border-radius: 16px;
+            color: #fff;
+        }
+
+        .btn-process {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-process:hover {
+            background: #eee;
+        }
+
+        .security-footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+
+        .security-footer span {
+            color: var(--safe);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>DeepForge Shield <span class="local-badge">Local Proxy Engine</span></h1>
+        </div>
+
+        <div class="sandbox-grid">
+            <div>
+                <span class="column-label">1. Client-Side Input (Raw Data)</span>
+                <div class="editor-box">
+                    <textarea id="userInput">We are analyzing the Q3 revenue for "Global-X Corp". 
+Our current balance at JPMorgan is $4,250,000. 
+The lead architect for the "Project Phoenix" is Sarah Miller.
+Please draft an email to sarah.miller@globalx.com regarding the deployment.</textarea>
+
+                    <div class="variable-list" id="varContainer">
+                        <div style="font-size: 10px; color: #999; margin-bottom: 10px;">DETECTED ENTITIES (LOCAL
+                            INFERENCE)</div>
+                        <div style="color: #ccc; font-style: italic; font-size: 12px;">Click "Process" to extract
+                            variables...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="column-label">2. Proxy Outbound (Neutralized Data)</span>
+                <div class="editor-box">
+                    <div id="outputView" class="result-view">The neutralized output for the LLM will appear here. No
+                        sensitive data will be transmitted.</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn-process" onclick="runShield()">Execute Local Masking</button>
+                <p style="font-size: 13px; opacity: 0.7; margin-top: 15px;">All processing happens on your hardware. No
+                    keys or names leave this machine.</p>
+            </div>
+        </div>
+
+        <div class="security-footer">
+            Status: <span>● Shield Active</span> | Connection: <span>Local Proxy Mode</span> | Data Sovereignty:
+            <span>100% User Owned</span>
+        </div>
+    </div>
+
+    <script>
+        function runShield() {
+            const text = document.getElementById('userInput').value;
+            const varContainer = document.getElementById('varContainer');
+            const outputView = document.getElementById('outputView');
+
+            // Logic for "detailed" demo
+            const mapping = [
+                { original: 'Global-X Corp', dummy: 'ENTITY_A' },
+                { original: 'JPMorgan', dummy: 'BANK_ALPHA' },
+                { original: '$4,250,000', dummy: 'VAL_CURRENCY_772' },
+                { original: 'Project Phoenix', dummy: 'INTERNAL_PROJECT_ID' },
+                { original: 'Sarah Miller', dummy: 'USER_REF_01' },
+                { original: 'sarah.miller@globalx.com', dummy: 'EMAIL_ALIASED_ID' }
+            ];
+
+            let processedText = text;
+            varContainer.innerHTML = '<div style="font-size: 10px; color: #999; margin-bottom: 10px;">DETECTED ENTITIES (LOCAL INFERENCE)</div>';
+
+            mapping.forEach(item => {
+                // Replace in text for view
+                const regex = new RegExp(item.original.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                processedText = processedText.replace(regex, `<span class="highlight-safe">${item.dummy}</span>`);
+
+                // Add to variable list
+                const varDiv = document.createElement('div');
+                varDiv.className = 'var-item';
+                varDiv.innerHTML = `
+                <span class="var-original">${item.original}</span>
+                <span class="var-arrow">→</span>
+                <span class="var-dummy">${item.dummy}</span>
+            `;
+                varContainer.appendChild(varDiv);
+            });
+
+            outputView.innerHTML = processedText;
+        }
+    </script>
+
+</body>
+
+</html>
